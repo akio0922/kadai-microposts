@@ -21,6 +21,8 @@
                                 {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
                             {!! Form::close() !!}
                         @endif
+                        {{-- 実践：お気に入りボタンの設置 --}}
+                        @include('micropost_favorite.favorite_button')
                     </div>
                 </div>
             </li>

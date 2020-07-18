@@ -29,10 +29,29 @@ Route::get('logout', 'Auth\LoginController@logout')->name('logout.get');
 
 Route::group(['middleware' => ['auth']], function () {
     Route::group(['prefix' => 'users/{id}'], function () {
+        ////////////
+        // follow //
+        ////////////
         Route::post('follow', 'UserFollowController@store')->name('user.follow');
         Route::delete('unfollow', 'UserFollowController@destroy')->name('user.unfollow');
         Route::get('followings', 'UsersController@followings')->name('users.followings');
         Route::get('followers', 'UsersController@followers')->name('users.followers');
+    });
+    
+    Route::group(['prefix' => 'microposts/{id}'], function () {
+        //////////////
+        // favorite //
+        //////////////
+        
+        Route::post('favorite', 'UserFavoriteController@store')->name('micropost.favorite');
+        Route::delete('unfavorite', 'UserFavoriteController@destroy')->name('micropost.unfavorite');
+        Route::get('favor', 'UsersController@favor')->name('microposts.favor');
+        Route::get('favored', 'UsersController@favored')->name('microposts.favored');
+        // 本来であれば、お気に入りの対象は投稿内容であるため、UserではなくMicropost(Faborite)
+        // Route::post('favorite', 'FavoriteController@store')->name('micropost.favorite');
+        // Route::delete('unfavorite', 'FavoriteController@destroy')->name('micropost.unfavorite');
+        // Route::get('favor', 'MicropostsController@favor')->name('micropost.favor');
+        // Route::get('favored', 'MicropostsController@favored')->name('micropost.favored');
     });
     
     Route::resource('users', 'UsersController', ['only' => ['index', 'show']]);
